@@ -1,49 +1,46 @@
 const arrKeys = [
-  { square: 'x&#178;' },
-  { seven: '7' },
-  { eight: '8' },
-  { nine: '9' },
-  { divide: '/' },
-  { percent: '%' },
-  { mathRoot: '&radic;' },
-  { four: '4' },
-  { five: '5' },
-  { six: '6' },
-  { multiply: '*' },
-  { minus: '-' },
-  { backspace: 'CE' },
-  { one: '1' },
-  { two: '2' },
-  { three: '3' },
-  { plus: '+' },
-  { equals: '=' },
-  { clear: 'C' },
-  { zero: '0' },
-  { doubleZero: '00' },
-  { dot: '.' },
+  { name: 'square', value: 'x&#178;' },
+  { name: 'seven', value: '7' },
+  { name: 'eight', value: '8' },
+  { name: 'nine', value: '9' },
+  { name: 'divide', value: '/' },
+  { name: 'percent', value: '%' },
+  { name: 'mathRoot', value: '&radic;' },
+  { name: 'four', value: '4' },
+  { name: 'five', value: '5' },
+  { name: 'six', value: '6' },
+  { name: 'multiply', value: '*' },
+  { name: 'minus', value: '-' },
+  { name: 'backspace', value: 'CE' },
+  { name: 'one', value: '1' },
+  { name: 'two', value: '2' },
+  { name: 'three', value: '3' },
+  { name: 'plus', value: '+' },
+  { name: 'equals', value: '=' },
+  { name: 'clear', value: 'C' },
+  { name: 'zero', value: '0' },
+  { name: 'doubleZero', value: '00' },
+  { name: 'dot', value: '.' },
 ];
 const output = document.querySelector('.result__output-value');
 const keyboard = document.querySelector('.calculator__keyboard');
 const calculator = document.querySelector('.calculator');
 
-arrKeys.map((obj) => {
-  for (let key in obj) {
-    keyboard.insertAdjacentHTML(
-      'beforeend',
-      `<button class="calculator__key ${key}" data-key="${key}" value="${obj[key]}">${obj[key]}</button>`
-    );
-     calculator.insertAdjacentHTML(
-       'beforeend',
-       `<audio id="${key}" src="./assets/sounds/${key}.mp3"></audio>`
-     );
-
-  }
+arrKeys.forEach((obj) => {
+  keyboard.insertAdjacentHTML(
+    'beforeend',
+    `<button class="calculator__key ${obj.name}" data-key="${obj.name}" value="${obj.value}">${obj.value}</button>`
+  );
+  calculator.insertAdjacentHTML(
+    'beforeend',
+    `<audio id="${obj.name}" src="./assets/sounds/${obj.name}.mp3"></audio>`
+  );
 });
 
 document.querySelectorAll('.calculator__key').forEach((button) => {
   button.addEventListener('click', function (e) {
     calc(this.value);
-     playKey(e);
+    playKey(e);
   });
 });
 
@@ -55,10 +52,11 @@ function calc(value) {
   if (value.match(/=|Enter/)) {
     try {
       output.textContent = eval(output.textContent);
+      setTimeout(playResult, 800);
     } catch {
       let oldValue = output.textContent;
 
-      let newValue = 'недопустимое выражение';
+      let newValue = 'Invalid expression';
 
       output.textContent = newValue;
 
@@ -75,24 +73,35 @@ function calc(value) {
     );
   } else if (value === '√') {
     output.textContent = Math.sqrt(output.textContent);
+    setTimeout(playResult, 900);
   } else if (value === 'x²') {
     output.textContent = Math.pow(output.textContent, 2);
+    setTimeout(playResult, 800);
   } else if (value === '%') {
     output.textContent = eval(output.textContent) / 100;
+    setTimeout(playResult, 800);
   } else {
     output.textContent += value;
   }
 }
 
-
 function playKey(e) {
   let key = e.target;
-  console.log(key);
   let sound = document.getElementById(key.dataset.key);
-  console.log(sound);
   sound.play();
 }
 
+function playResult() {
+  let res = [...output.textContent];
+  res.forEach((el, i) => {
+    setTimeout(function () {
+      let soundName = arrKeys.find((obj) => obj.value === el).name;
+      let soundRes = document.getElementById(soundName);
+      soundRes.currentTime = 0;
+      soundRes.play();
+    }, 1000 * ++i);
+  });
+}
 
 // const HISTORY_VAL = document.querySelector('.result__history-value');
 // const RESULT_VAL = document.querySelector('.result__output-value');
