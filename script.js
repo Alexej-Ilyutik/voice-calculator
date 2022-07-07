@@ -19,24 +19,31 @@ const arrKeys = [
   { equals: '=' },
   { clear: 'C' },
   { zero: '0' },
-  { doublezero: '00' },
+  { doubleZero: '00' },
   { dot: '.' },
 ];
 const output = document.querySelector('.result__output-value');
-const KEYBOARD = document.querySelector('.calculator__keyboard');
+const keyboard = document.querySelector('.calculator__keyboard');
+const calculator = document.querySelector('.calculator');
 
 arrKeys.map((obj) => {
   for (let key in obj) {
-    KEYBOARD.insertAdjacentHTML(
+    keyboard.insertAdjacentHTML(
       'beforeend',
-      `<button class="calculator__key ${key}" value="${obj[key]}">${obj[key]}</button>`
+      `<button class="calculator__key ${key}" data-key="${key}" value="${obj[key]}">${obj[key]}</button>`
     );
+     calculator.insertAdjacentHTML(
+       'beforeend',
+       `<audio id="${key}" src="./assets/sounds/${key}.mp3"></audio>`
+     );
+
   }
 });
 
 document.querySelectorAll('.calculator__key').forEach((button) => {
-  button.addEventListener('click', function () {
+  button.addEventListener('click', function (e) {
     calc(this.value);
+     playKey(e);
   });
 });
 
@@ -71,11 +78,21 @@ function calc(value) {
   } else if (value === 'x²') {
     output.textContent = Math.pow(output.textContent, 2);
   } else if (value === '%') {
-     output.textContent = eval(output.textContent) / 100;
+    output.textContent = eval(output.textContent) / 100;
   } else {
     output.textContent += value;
   }
 }
+
+
+function playKey(e) {
+  let key = e.target;
+  console.log(key);
+  let sound = document.getElementById(key.dataset.key);
+  console.log(sound);
+  sound.play();
+}
+
 
 // const HISTORY_VAL = document.querySelector('.result__history-value');
 // const RESULT_VAL = document.querySelector('.result__output-value');
