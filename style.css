@@ -78,7 +78,7 @@ body {
   font-size: 5rem;
 }
 .calculator .calculator__result .result__output {
-  font-size: 8rem;
+  font-size: 12rem;
   font-weight: 700;
 }
 .calculator .calculator__keyboard {

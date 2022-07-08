@@ -48,21 +48,32 @@ document.addEventListener('keydown', (event) => {
   if (event.key.match(/[0-9%\/*\-+=]|Backspace|Enter/)) calc(event.key);
 });
 
+function error(Newtext) {
+  let oldVal = output.textContent.substring(0, output.textContent.length - 2);
+  output.textContent = Newtext;
+  setTimeout(() => {
+    output.textContent = oldVal;
+  }, 1500);
+}
+
+
 function calc(value) {
+  if (output.textContent.length > 13) {
+    const newVal = 'Max length - 12!';
+    error(newVal);
+  }
+  
   if (value.match(/=|Enter/)) {
     try {
       output.textContent = eval(output.textContent);
+      if (output.textContent.length > 13) {
+        alert(`The result is too big: ${output.textContent}!`);
+        output.textContent = output.textContent.substring(0, 12);
+      }
       setTimeout(playResult, 800);
     } catch {
-      let oldValue = output.textContent;
-
       let newValue = 'Invalid expression';
-
-      output.textContent = newValue;
-
-      setTimeout(() => {
-        output.textContent = oldValue;
-      }, 1500);
+      error(newValue);
     }
   } else if (value === 'C') {
     output.textContent = '';
@@ -73,9 +84,17 @@ function calc(value) {
     );
   } else if (value === '√') {
     output.textContent = Math.sqrt(output.textContent);
+    if (output.textContent.length > 13) {
+      alert(`The result is too big: ${output.textContent}!`);
+      output.textContent = output.textContent.substring(0, 12);
+    }
     setTimeout(playResult, 900);
   } else if (value === 'x²') {
     output.textContent = Math.pow(output.textContent, 2);
+    if (output.textContent.length > 13) {
+      alert(`The result is too big: ${output.textContent}!`);
+      output.textContent = output.textContent.substring(0, 12);
+    }
     setTimeout(playResult, 800);
   } else if (value === '%') {
     output.textContent = eval(output.textContent) / 100;
