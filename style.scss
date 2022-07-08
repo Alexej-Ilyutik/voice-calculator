@@ -49,6 +49,7 @@ body {
   background-color: var(--bg-color);
   flex: 1 1 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -71,8 +72,7 @@ body {
     margin-bottom: 5rem;
     padding: 1rem 1rem;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    justify-content: space-between;
     .result__history {
       font-size: 5rem;
     }
@@ -80,7 +80,25 @@ body {
       font-size: 12rem;
       font-weight: 700;
     }
+    .result__mic {
+      height: 4rem;
+      width: 4rem;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        transform: scale(1.05);
+      }
+      #mic {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .result__tooltip {
+        visibility: hidden;
+      }
+    }
   }
+
   .calculator__keyboard {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -118,6 +136,30 @@ body {
   }
 }
 
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 75rem;
+  height: 20rem;
+  background-color: var(--calc-operator-color);
+  margin-bottom: 5rem;
+  padding: 3rem;
+  border: 0.4rem solid var(--bg-color);
+  border-radius: 1rem;
+  box-shadow: 1rem 1rem 3rem 0.3rem rgb(0 0 0 / 42%),
+    0 0.5rem 2rem 0 rgb(0 0 0 / 20%);
+  transition: all 0.3s ease-in-out;
+  .tooltip__rules {
+    color: var(--main-color);
+    font-size: 2.5rem;
+  }
+}
+
+.tooltip__active {
+  visibility: visible;
+  opacity: 1;
+}
+
 .calculator__key,
 .result__history-value,
 .result__output-value {
@@ -141,6 +183,25 @@ body {
 .multiply,
 .divide {
   background-color: var(--calc-often-color);
+}
+
+.mic2 {
+  display: none;
+  animation: mic-animation 1.5s infinite;
+}
+
+@keyframes mic-animation {
+  0% {
+    transform: scale(0.9);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 148, 255, 0.4);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0, 148, 255, 0);
+  }
 }
 
 .footer {

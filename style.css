@@ -49,6 +49,7 @@ body {
   background-color: var(--bg-color);
   flex: 1 1 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -71,8 +72,7 @@ body {
   margin-bottom: 5rem;
   padding: 1rem 1rem;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  justify-content: space-between;
 }
 .calculator .calculator__result .result__history {
   font-size: 5rem;
@@ -80,6 +80,23 @@ body {
 .calculator .calculator__result .result__output {
   font-size: 12rem;
   font-weight: 700;
+}
+.calculator .calculator__result .result__mic {
+  height: 4rem;
+  width: 4rem;
+  transition: all 0.3s ease-in-out;
+}
+.calculator .calculator__result .result__mic:hover {
+  transform: scale(1.05);
+}
+.calculator .calculator__result .result__mic #mic {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.calculator .calculator__result .result__mic .result__tooltip {
+  visibility: hidden;
 }
 .calculator .calculator__keyboard {
   display: grid;
@@ -114,6 +131,29 @@ body {
   transform: scale(1.05);
 }
 
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 75rem;
+  height: 20rem;
+  background-color: var(--calc-operator-color);
+  margin-bottom: 5rem;
+  padding: 3rem;
+  border: 0.4rem solid var(--bg-color);
+  border-radius: 1rem;
+  box-shadow: 1rem 1rem 3rem 0.3rem rgba(0, 0, 0, 0.42), 0 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+.tooltip .tooltip__rules {
+  color: var(--main-color);
+  font-size: 2.5rem;
+}
+
+.tooltip__active {
+  visibility: visible;
+  opacity: 1;
+}
+
 .calculator__key,
 .result__history-value,
 .result__output-value {
@@ -139,6 +179,39 @@ body {
   background-color: var(--calc-often-color);
 }
 
+.mic2 {
+  display: none;
+  -webkit-animation: mic-animation 1.5s infinite;
+          animation: mic-animation 1.5s infinite;
+}
+
+@-webkit-keyframes mic-animation {
+  0% {
+    transform: scale(0.9);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 148, 255, 0.4);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0, 148, 255, 0);
+  }
+}
+
+@keyframes mic-animation {
+  0% {
+    transform: scale(0.9);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 148, 255, 0.4);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0, 148, 255, 0);
+  }
+}
 .footer {
   background-color: var(--main-color);
   padding: 1rem 0;
