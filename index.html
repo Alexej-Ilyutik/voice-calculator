@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Calculator</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="./assets/icon.png" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <h1>Voice Calculator</h1>
+      </header>
+      <main class="main">
+        <div class="calculator">
+          <div class="calculator__result result">
+            <div class="result__mic">
+              <img
+                class="mic"
+                id="mic"
+                src="./assets/mic.svg"
+                alt="microphone"
+              />
+            </div>
+            <div class="result__output">
+              <p class="result__output-value"></p>
+            </div>
+          </div>
+
+          <div class="calculator__keyboard"></div>
+        </div>
+        <div class="tooltip">
+          <ul class="tooltip__rules">
+            <li>Available voice operations: plus, minus, multiply, divide.</li>
+            <li>The user input format is: number + operation + number.</li>
+            <li>Example: 2 multiply 5 will be 2 &times 5</li>
+          </ul>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="footer__link">
+          <img src="assets/github.svg" alt="GitHub" />
+          <a href="https://github.com/Alexej-Ilyutik" target="_blank">
+            Alexej Ilyutik
+          </a>
+        </div>
+        <p>2022</p>
+      </footer>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

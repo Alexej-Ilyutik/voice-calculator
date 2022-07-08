@@ -1,0 +1,240 @@
+:root {
+  --text-color: #fff;
+  --text-calc: rgb(27, 27, 27);
+  --bg-color: rgba(0, 0, 0, 0.25);
+  --main-color: rgb(45, 52, 71);
+  --calc-color: rgb(82, 91, 114);
+  --calc-screen-color: rgb(194, 225, 249);
+  --calc-C-color: rgb(152, 46, 46);
+  --calc-operator-color: rgb(160, 159, 159);
+  --calc-equals-color: rgb(53, 53, 109);
+  --calc-often-color: rgb(82, 80, 90);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-size: 62.5%;
+  font-weight: 500;
+  scroll-behavior: smooth;
+  color: var(--text-color);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.wrapper {
+  width: 100%;
+  min-width: 85rem;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 1.5rem 0;
+  background-color: var(--main-color);
+}
+.header h1 {
+  display: block;
+  font-size: 4rem;
+  text-align: center;
+}
+
+.main {
+  background-color: var(--bg-color);
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculator {
+  width: 75rem;
+  height: 60rem;
+  margin: 2rem 0 5rem 0;
+  background-color: var(--calc-color);
+  border: 0.4rem solid var(--bg-color);
+  border-radius: 1rem;
+  box-shadow: 1rem 1rem 3rem 0.3rem rgba(0, 0, 0, 0.42), 0 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
+  padding: 3rem 2.5rem;
+}
+.calculator .calculator__result {
+  height: 22%;
+  background-color: var(--calc-screen-color);
+  border-radius: 0.5rem;
+  border: 0.3rem solid var(--bg-color);
+  margin-bottom: 5rem;
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.calculator .calculator__result .result__history {
+  font-size: 5rem;
+}
+.calculator .calculator__result .result__output {
+  font-size: 12rem;
+  font-weight: 700;
+}
+.calculator .calculator__result .result__mic {
+  height: 4rem;
+  width: 4rem;
+  transition: all 0.3s ease-in-out;
+}
+.calculator .calculator__result .result__mic:hover {
+  transform: scale(1.05);
+}
+.calculator .calculator__result .result__mic #mic {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.calculator .calculator__result .result__mic .result__tooltip {
+  visibility: hidden;
+}
+.calculator .calculator__keyboard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 2.5rem;
+}
+.calculator .calculator__keyboard .plus {
+  height: 100%;
+  grid-row-start: 3;
+  grid-row-end: 5;
+  grid-column-start: 5;
+  grid-column-end: 6;
+}
+.calculator .calculator__keyboard .equals {
+  height: 100%;
+  grid-row-start: 3;
+  grid-row-end: 5;
+  grid-column-start: 6;
+  grid-column-end: 7;
+  background-color: var(--calc-equals-color);
+}
+.calculator .calculator__key {
+  height: 7rem;
+  font-size: 3rem;
+  text-align: center;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0.3rem 0.2rem 0.6rem 0.2rem rgba(0, 0, 0, 0.42), 0 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
+}
+.calculator .calculator__key:hover {
+  transform: scale(1.05);
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 75rem;
+  height: 20rem;
+  background-color: var(--calc-operator-color);
+  margin-bottom: 5rem;
+  padding: 3rem;
+  border: 0.4rem solid var(--bg-color);
+  border-radius: 1rem;
+  box-shadow: 1rem 1rem 3rem 0.3rem rgba(0, 0, 0, 0.42), 0 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+.tooltip .tooltip__rules li {
+  color: var(--main-color);
+  font-size: 2.5rem;
+  line-height: 4rem;
+  margin-left: 2rem;
+}
+
+.tooltip__active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.calculator__key,
+.result__history-value,
+.result__output-value {
+  color: var(--text-calc);
+}
+
+.clear {
+  background-color: var(--calc-C-color);
+}
+
+.square,
+.percent,
+.mathRoot,
+.backspace,
+.dot {
+  background-color: var(--calc-operator-color);
+}
+
+.plus,
+.minus,
+.multiply,
+.divide {
+  background-color: var(--calc-often-color);
+}
+
+.mic__record {
+  -webkit-animation: mic-animation 1.5s infinite;
+          animation: mic-animation 1.5s infinite;
+}
+
+@-webkit-keyframes mic-animation {
+  0% {
+    transform: scale(0.9);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 148, 255, 0.4);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0, 148, 255, 0);
+  }
+}
+
+@keyframes mic-animation {
+  0% {
+    transform: scale(0.9);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(0, 148, 255, 0.4);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0, 148, 255, 0);
+  }
+}
+.footer {
+  background-color: var(--main-color);
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.footer .footer__link {
+  width: 18.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: inherit;
+  background-color: inherit;
+}
+.footer .footer__link img {
+  background-color: inherit;
+  width: 3rem;
+}
+.footer .footer__link a {
+  font-size: 2.5rem;
+}
+.footer p {
+  font-size: 2.5rem;
+}/*# sourceMappingURL=style.css.map */
