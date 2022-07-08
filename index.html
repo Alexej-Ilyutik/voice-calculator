@@ -20,20 +20,11 @@
       <main class="main">
         <div class="calculator">
           <div class="calculator__result result">
-            <!-- <div class="result__history">
-              <p class="result__history-value"></p>
-            </div> -->
             <div class="result__mic">
               <img
-                class="mic1"
+                class="mic"
                 id="mic"
                 src="./assets/mic.svg"
-                alt="microphone"
-              />
-              <img
-                class="mic2"
-                id="mic"
-                src="./assets/mic2.svg"
                 alt="microphone"
               />
             </div>
@@ -45,11 +36,11 @@
           <div class="calculator__keyboard"></div>
         </div>
         <div class="tooltip">
-          <span class="tooltip__rules"
-            >Operations are plus, minus, multiply, divide &amp; reminder The
-            user input format is number + operation + number<br /><br />
-            Eg: 2 multiply 5 will be 2 &times 5
-          </span>
+          <ul class="tooltip__rules">
+            <li>Available voice operations: plus, minus, multiply, divide.</li>
+            <li>The user input format is: number + operation + number.</li>
+            <li>Example: 2 multiply 5 will be 2 &times 5</li>
+          </ul>
         </div>
       </main>
       <footer class="footer">

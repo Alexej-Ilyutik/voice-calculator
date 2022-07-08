@@ -56,13 +56,12 @@ function error(Newtext) {
   }, 1500);
 }
 
-
 function calc(value) {
   if (output.textContent.length > 13) {
     const newVal = 'Max length - 12!';
     error(newVal);
   }
-  
+
   if (value.match(/=|Enter/)) {
     try {
       output.textContent = eval(output.textContent);
@@ -70,7 +69,10 @@ function calc(value) {
         alert(`The result is too big: ${output.textContent}!`);
         output.textContent = output.textContent.substring(0, 12);
       }
-      setTimeout(playResult, 800);
+      setTimeout(() => {
+        let res = [...output.textContent];
+        playResult(res);
+      }, 800);
     } catch {
       let newValue = 'Invalid expression';
       error(newValue);
@@ -110,9 +112,8 @@ function playKey(e) {
   sound.play();
 }
 
-function playResult() {
-  let res = [...output.textContent];
-  res.forEach((el, i) => {
+function playResult(arr) {
+  arr.forEach((el, i) => {
     setTimeout(function () {
       let soundName = arrKeys.find((obj) => obj.value === el).name;
       let soundRes = document.getElementById(soundName);
@@ -122,70 +123,50 @@ function playResult() {
   });
 }
 
-// const HISTORY_VAL = document.querySelector('.result__history-value');
-// const RESULT_VAL = document.querySelector('.result__output-value');
+const microphone = document.getElementById('mic');
+const tooltip = document.querySelector('.tooltip');
 
-// function getHistory() {
-//   return HISTORY_VAL.innerHTML;
-// }
+microphone.onclick = function () {
+  microphone.src = './assets/mic2.svg';
+  microphone.classList.remove('mic');
+  microphone.classList.add('mic__record');
+  tooltip.classList.add('tooltip__active');
+  let recognition = new (window.SpeechRecognition ||
+    window.webkitSpeechRecognition ||
+    window.mozSpeechRecognition ||
+    window.msSpeechRecognition)();
+  recognition.lang = 'en-US';
+  recognition.start();
 
-// function printHistory(value) {
-//   HISTORY_VAL.innerHTML = value;
-// }
+  recognition.onresult = function (event) {
+    let input = event.results[0][0].transcript;
+    console.log(input);
+    output.textContent = input;
+    setTimeout(function () {
+      evaluate(input);
+    }, 1500);
+    microphone.src = './assets/mic.svg';
+    microphone.classList.remove('mic__record');
+    microphone.classList.add('mic');
+    tooltip.classList.remove('tooltip__active');
+  };
+};
 
-// function getResult() {
-//   return RESULT_VAL.innerHTML;
-// }
-
-// function printResult(value) {
-//   RESULT_VAL.innerHTML = value;
-// }
-
-// let operator = document.getElementsByClassName('operator');
-// for (let i = 0; i < operator.length; i++) {
-//   operator[i].addEventListener('click', function (){
-//     if (this.id == 'clear') {
-//       printHistory('');
-//       printResult('');
-//     } else if (this.id == 'backspace') {
-//       let output = getResult().toString();
-//       if (output) {
-//         output = output.substring(0, output.length - 1);
-//         printResult(output);
-//       }
-//     } else {
-//       let output = getResult();
-//       let history = getHistory();
-//       if (output === '' && history !== '') {
-//         if (isNaN(history[history.length - 1])) {
-//           history = history.substring(0, history.length - 1);
-//         }
-//       }
-//       if (output !== '' || history !== '') {
-//         output = output == '' ? output : reverseNumberFormat(output);
-//         history = history + output;
-//         if (this.id == '=') {
-//           var result = eval(history);
-//           printOutput(result);
-//           printHistory('');
-//         } else {
-//           history = history + this.id;
-//           printHistory(history);
-//           printOutput('');
-//         }
-//       }
-//     }
-//   });
-// }
-
-// let number = document.getElementsByClassName('number');
-// for (let i = 0; i < number.length; i++) {
-//   number[i].addEventListener('click', function () {
-//     let output = getResult();
-//     if (output != NaN) {
-//       //if output is a number
-//       output = output + this.id;
-//       printResult(output);
-//     }
-//   });
-// }
+function evaluate(input) {
+  try {
+    let result = eval(input);
+    let arrVoice = input.split('');
+    arrVoice.push('=');
+    let arrResult = String(result).split('');
+    arrVoice = [...arrVoice, ...arrResult];
+    arrVoice = arrVoice.filter((entry) => entry.trim() != '');
+    output.textContent = result;
+    playResult(arrVoice);
+  } catch (e) {
+    let newValue = 'Invalid expression';
+    output.textContent = newValue;
+    setTimeout(() => {
+      output.textContent = '';
+    }, 1500);
+  }
+}

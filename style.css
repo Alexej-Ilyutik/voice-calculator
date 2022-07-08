@@ -144,9 +144,11 @@ body {
   box-shadow: 1rem 1rem 3rem 0.3rem rgba(0, 0, 0, 0.42), 0 0.5rem 2rem 0 rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
 }
-.tooltip .tooltip__rules {
+.tooltip .tooltip__rules li {
   color: var(--main-color);
   font-size: 2.5rem;
+  line-height: 4rem;
+  margin-left: 2rem;
 }
 
 .tooltip__active {
@@ -179,8 +181,7 @@ body {
   background-color: var(--calc-often-color);
 }
 
-.mic2 {
-  display: none;
+.mic__record {
   -webkit-animation: mic-animation 1.5s infinite;
           animation: mic-animation 1.5s infinite;
 }
